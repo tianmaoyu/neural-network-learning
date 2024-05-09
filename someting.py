@@ -1,6 +1,23 @@
 import random
 
 import numpy
+import numpy  as np
+
+
+x = np.linspace(-1.0, 1.0, 50)
+y = np.random.rand(50) - 0.5
+r = np.ones(50)
+g = np.zeros(50)
+b = np.zeros(50)
+
+vertices = np.dstack([x, y, r, g, b])
+print(vertices)
+
+a=numpy.ones((5,2))
+b=numpy.ones((5,2))
+
+sub=numpy.subtract.outer(a[:,0], a[:,0])
+print(a,b,sub)
 
 array1 = numpy.random.rand(1, 3) - 0.5
 print(array1)
