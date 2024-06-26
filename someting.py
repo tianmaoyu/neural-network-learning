@@ -3,8 +3,17 @@ import random
 import numpy
 import numpy  as np
 
+dic=dict()
+dic.update(name="eric",age=18)
+print(dic)
+dic.update(name="eric",age=19)
+
+print(tuple([1,2,3,4]))
+
+verts = np.array([[0, 0,0], [1, 0,0], [1, 1,0]]).reshape(-1,1)
 
 x = np.linspace(-1.0, 1.0, 50)
+
 y = np.random.rand(50) - 0.5
 r = np.ones(50)
 g = np.zeros(50)
