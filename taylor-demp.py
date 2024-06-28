@@ -28,6 +28,4 @@ def GradientDescent():
         current_x = current_x -  derivation(current_x) *learning_rate
         print(f'迭代次数count= {count},最小值={current_x}')
 
-
-
 GradientDescent()
