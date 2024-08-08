@@ -46,7 +46,7 @@ rotate_x = Matrix([
     [0, cos(roll), -sin(roll)],
     [0, sin(roll), cos(roll)]
 ])
-rotate_matrix =camera_init @ rotate_z * rotate_y * rotate_x
+rotate_matrix = camera_init * rotate_z * rotate_y * rotate_x
 
 # 旋转矩阵 个各元素
 a1, a2, a3 = rotate_matrix[0, :]
