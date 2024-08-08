@@ -3,6 +3,8 @@
   <component name="Encoding">
     <file url="file://$PROJECT_DIR$/后方交会/part_diff-共线方程.py" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/后方交会/rear_intersection-001.py" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/后方交会/rear_intersection-002-重构.py" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/后方交会/rear_intersection-003-牛顿+最小二乘.py" charset="UTF-8" />
     <file url="PROJECT" charset="GBK" />
   </component>
 </project>
