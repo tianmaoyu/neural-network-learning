@@ -87,7 +87,7 @@ point = Matrix([
 # 按照公式可以写出：但是求不出来
 # k_matrix =  senor_matrix * (t_matrix * camera_init * rotate_z * rotate_y * rotate_x).inv() * point
 # 只能手动先处理  正交矩阵
-matrix_inv= (rotate_z * rotate_y * rotate_x).T * camera_init.inv() *  t_matrix_inv
+matrix_inv= (rotate_z * rotate_y * rotate_x).T * camera_init.T *  t_matrix_inv
 k_matrix = image_matrix * senor_matrix * matrix_inv * point
 
 # 归一化 w轴，消掉 第4维
