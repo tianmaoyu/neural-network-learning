@@ -2,23 +2,37 @@
 from sympy import symbols, sin, cos, Matrix, simplify, latex
 
 # 图片坐标
-# image_list = [[0, 0], [4000, 0], [0, 3000], [4000, 3000]]
+# image_list = [[0, 0], [4000, 0], [4000, 3000], [0, 3000]]
 
-# 传感器 坐标
+# 传感器 坐标 --位置应该还有问题
+sensor_list = [
+    [-0.0032, -0.00240],
+    [0.0032, -0.0024],
+    [0.0032, 0.0024],
+    [-0.0032, 0.0024],
+]
+
 sensor_list = [
     [-0.0032, -0.0024],
     [0.0032, -0.0024],
-    [-0.0032, 0.0024],
-    [0.0032, 0.0024]
+    [0.0032, 0.00240],
+    [-0.0032, 0.0024]
 ]
 
 # 地理坐标,
 geocoord_list = [
     [12623944.7985182, 2532805.94713418, 0],
     [12624109.3610210, 2532918.20406684, 0],
-    [12624075.9391505, 2532731.78094242, 0],
     [12624130.5637318, 2532769.04330686, 0],
+    [12624075.9391505, 2532731.78094242, 0],
 ]
+
+# geocoord_list = [
+#     [12623944.7985182, 2532805.94713418, 0],
+#     [12624109.3610210, 2532918.20406684, 0],
+#     [12624075.9391505, 2532731.78094242, 0],
+#     [12624130.5637318, 2532769.04330686, 0],
+# ]
 
 # 旋转顺序 Z-Y-X,分别对应的角 yaw, pitch,roll 即:偏航,俯仰角,滚角
 yaw, pitch, roll = symbols('yaw pitch roll')
@@ -56,7 +70,6 @@ rotate_x = Matrix([
     [0, 0, 0, 1],
 ])
 
-
 t_matrix_inv = Matrix([
     [1, 0, 0, -Xs],
     [0, 1, 0, -Ys],
@@ -88,17 +101,17 @@ point = Matrix([
 # 按照公式可以写出：但是求不出来
 # k_matrix =  senor_matrix * (t_matrix * camera_init * rotate_z * rotate_y * rotate_x).inv() * point
 # 只能手动先处理  正交矩阵
-matrix_inv= (rotate_z * rotate_y * rotate_x).T * camera_init.T * t_matrix_inv
+matrix_inv = (rotate_z * rotate_y * rotate_x).T * camera_init.T * t_matrix_inv
 k_matrix = senor_matrix * matrix_inv * point
 
 # 归一化 w轴，消掉 第4维
-f_x =simplify(k_matrix[0] / k_matrix[3])
+f_x = simplify(k_matrix[0] / k_matrix[3])
 function_x = simplify(k_matrix[1] / k_matrix[3])
 function_y = simplify(k_matrix[2] / k_matrix[3])
-print(latex(f_x))
-print(latex(function_x))
-print(latex(function_y))
-# 传感器安装在 x 轴上，不是在 z 轴，
+# print(latex(f_x))
+# print(latex(function_x))
+# print(latex(function_y))
+# # 传感器安装在 x 轴上，不是在 z 轴，
 function_Matrix = Matrix([function_x, function_y])
 
 # 给第一些 初始评估值
@@ -151,7 +164,6 @@ while (times < 100):
 
     data = {Xs: value_Xs, Ys: value_Ys, Zs: value_Zs, yaw: np.rad2deg(value_yaw), pitch: np.rad2deg(value_pitch),
             roll: np.rad2deg(value_roll)}
-
 
     print(f"times:{times} :data:{data}")
     print(f"-------" * 6)
