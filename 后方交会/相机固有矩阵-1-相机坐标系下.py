@@ -28,9 +28,9 @@ image_matrix = sp.Matrix([
 ])
 
 sensor_matrix = sp.Matrix([
-    [f, 0, 0, 0],
-    [0, f, 0, 0],
-    [0, 0, f, 0],
+    [-f, 0, 0, 0],
+    [0, -f, 0, 0],
+    [0, 0, -f, 0],
     [1, 0, 0, 0],
 ])
 camera_init = sp.Matrix([

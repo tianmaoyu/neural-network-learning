@@ -1,8 +1,8 @@
 ﻿import numpy as np
-from sympy import symbols, sin, cos, Matrix
+from sympy import symbols, sin, cos, Matrix, simplify, latex
 
 # 图片坐标
-image_list = [[0, 0], [4000, 0], [0, 3000], [4000, 3000]]
+# image_list = [[0, 0], [4000, 0], [0, 3000], [4000, 3000]]
 
 # 传感器 坐标
 sensor_list = [
@@ -11,6 +11,7 @@ sensor_list = [
     [-0.0032, 0.0024],
     [0.0032, 0.0024]
 ]
+
 # 地理坐标,
 geocoord_list = [
     [12623944.7985182, 2532805.94713418, 0],
@@ -71,9 +72,9 @@ image_matrix = Matrix([
 ])
 
 senor_matrix = Matrix([
-    [f, 0, 0, 0],
-    [0, f, 0, 0],
-    [0, 0, f, 0],
+    [-f, 0, 0, 0],
+    [0, -f, 0, 0],
+    [0, 0, -f, 0],
     [1, 0, 0, 0],
 ])
 
@@ -87,13 +88,16 @@ point = Matrix([
 # 按照公式可以写出：但是求不出来
 # k_matrix =  senor_matrix * (t_matrix * camera_init * rotate_z * rotate_y * rotate_x).inv() * point
 # 只能手动先处理  正交矩阵
-matrix_inv= (rotate_z * rotate_y * rotate_x).T * camera_init.T *  t_matrix_inv
-k_matrix = image_matrix * senor_matrix * matrix_inv * point
+matrix_inv= (rotate_z * rotate_y * rotate_x).T * camera_init.T * t_matrix_inv
+k_matrix = senor_matrix * matrix_inv * point
 
 # 归一化 w轴，消掉 第4维
-f_x = k_matrix[0] / k_matrix[3]
-function_x = -k_matrix[1] / k_matrix[3]
-function_y = -k_matrix[2] / k_matrix[3]
+f_x =simplify(k_matrix[0] / k_matrix[3])
+function_x = simplify(k_matrix[1] / k_matrix[3])
+function_y = simplify(k_matrix[2] / k_matrix[3])
+print(latex(f_x))
+print(latex(function_x))
+print(latex(function_y))
 # 传感器安装在 x 轴上，不是在 z 轴，
 function_Matrix = Matrix([function_x, function_y])
 
@@ -122,8 +126,8 @@ while (times < 100):
         approx_x = function_x.subs(key_value)
         approx_y = function_y.subs(key_value)
         # 残差-误差
-        L[i * 2, 0] = approx_x - image_list[i][0]
-        L[i * 2 + 1, 0] = approx_y - image_list[i][1]
+        L[i * 2, 0] = approx_x - sensor_list[i][0]
+        L[i * 2 + 1, 0] = approx_y - sensor_list[i][1]
 
         # 计算雅克比矩阵
         Jacobian = function_Matrix.jacobian([Xs, Ys, Zs, yaw, pitch, roll])
