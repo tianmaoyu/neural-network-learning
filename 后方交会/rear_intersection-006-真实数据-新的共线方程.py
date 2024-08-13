@@ -20,6 +20,11 @@ geocoord_list = [
     [12624075.9391505, 2532731.78094242, 0],
 ]
 
+geocoord_list =  [[12710893.3666384, 2582819.24037641,0],
+                  [12710889.2628446, 2582732.21988944,0],
+                  [12710823.9312955, 2582735.21774206,0],
+                  [12710828.0428850, 2582822.40407370,0]
+                  ]
 
 # 旋转顺序 Z-Y-X,分别对应的角 yaw, pitch,roll 即:偏航,俯仰角,滚角
 yaw, pitch, roll = symbols('yaw pitch roll')
@@ -102,9 +107,9 @@ function_y = simplify(k_matrix[2] / k_matrix[3])
 function_Matrix = Matrix([function_x, function_y])
 
 # 给第一些 初始评估值
-value_Xs = 12624109
-value_Ys = 2532918
-value_Zs = 100
+value_Xs = 12710893
+value_Ys = 2582819
+value_Zs = -100
 value_yaw = 0
 value_pitch = 0
 value_roll = 0
